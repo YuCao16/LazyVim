@@ -1,0 +1,47 @@
+[tool.ruff]
+line-length = 80
+exclude = [
+  ".bzr",
+  ".direnv",
+  ".eggs",
+  ".git",
+  ".git-rewrite",
+  ".hg",
+  ".ipynb_checkpoints",
+  ".mypy_cache",
+  ".nox",
+  ".pants.d",
+  ".pyenv",
+  ".pytest_cache",
+  ".pytype",
+  ".ruff_cache",
+  ".svn",
+  ".tox",
+  ".venv",
+  ".vscode",
+  "__pypackages__",
+  "_build",
+  "buck-out",
+  "build",
+  "dist",
+  "node_modules",
+  "site-packages",
+  "venv",
+]
+
+[tool.ruff.lint]
+select = ["I", "A", "B", "N", "ANN", "C90"]
+ignore = [
+  "E501",
+  "E402",
+  "B905",
+  "N803",
+  "N802",
+  "N816",
+  "ANN101",
+  "ANN401",
+  "N812",
+  "F405",
+  "F401",
+  "I001",
+]
