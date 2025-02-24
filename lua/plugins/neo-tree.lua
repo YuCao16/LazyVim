@@ -99,8 +99,17 @@ return {
       },
       sources = {
         "filesystem",
-        -- "document_symbols",
-        -- "git_status",
+        "document_symbols",
+        "git_status",
+      },
+      source_selector = {
+        winbar = true,
+        -- statusline = true,
+        sources = {
+          { source = "filesystem", display_name = "  Files" }, --      
+          { source = "document_symbols", display_name = " 󰊕 Sign" },
+          { source = "git_status", display_name = " 󰊢 Git" }, -- 󰊢      
+        },
       },
     },
   },
