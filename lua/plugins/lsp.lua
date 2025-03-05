@@ -21,13 +21,8 @@ return {
         settings = {
           python = {
             analysis = {
-              -- typeCheckingMode = "off",
               -- typeCheckingMode = "strict",
               diagnosticMode = "openFilesOnly",
-              inlayHints = {
-                variableTypes = true,
-                functionReturnTypes = true,
-              },
               argAssignmentFunction = false,
             },
             pythonPath = "python3",
@@ -41,6 +36,16 @@ return {
           },
         },
       },
+      basedpyright = {
+        settings = {
+          basedpyright = {
+            -- disableLanguageServices = true,
+            analysis = {
+              typeCheckingMode = "basic",
+            },
+          },
+        },
+      },
     },
     setup = {
       pyright = function()
@@ -49,6 +54,13 @@ return {
             -- disable hover in favor of jedi-language-server
             client.server_capabilities.hoverProvider = false
             client.server_capabilities.signatureHelpProvider = nil
+          end
+        end)
+      end,
+      basedpyright = function()
+        require("lazyvim.util").lsp.on_attach(function(client, _)
+          if client.name == "basedpyright" then
+            client.server_capabilities.semanticTokensProvider = nil
           end
         end)
       end,
