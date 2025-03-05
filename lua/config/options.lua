@@ -5,6 +5,13 @@
 vim.g.mapleader = ","
 vim.g.autoformat = false
 
+-- Snacks animations
+-- Set to `false` to globally disable all snacks animations
+vim.g.snacks_animate = false
+
+-- Set to "basedpyright" to use basedpyright instead of pyright.
+vim.g.lazyvim_python_lsp = "basedpyright"
+
 -- https://github.com/neovim/neovim/discussions/28010
 vim.opt.clipboard = ""
 local function paste()

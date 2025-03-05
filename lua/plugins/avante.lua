@@ -11,6 +11,12 @@ return {
       temperature = 0,
       max_tokens = 4096,
     },
+    file_selector = {
+      --- @alias FileSelectorProvider "native" | "fzf" | "mini.pick" | "snacks" | "telescope" | string
+      provider = "snacks",
+      -- Options override for custom providers
+      provider_opts = {},
+    },
     mappings = {
       --- @class AvanteConflictMappings
       diff = {
