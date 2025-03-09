@@ -30,6 +30,9 @@ return {
         -- Sianature
         LspSignatureActiveParameter = { link = "Search" },
 
+        -- DropBar
+        DropBarIconKindFolder = { fg = "#8094b4" },
+
         -- Neo-Tree
         NeoTreeDirectoryIcon = { fg = "#8094b4" },
         NeoTreeIndentMarker = { fg = "#abb2bf" },
