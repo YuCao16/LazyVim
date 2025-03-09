@@ -1,58 +1,48 @@
-local conditionals = {
-  has_enough_room = function()
-    return vim.o.columns > 100
-  end,
-  has_comp_before = function()
-    return vim.bo.filetype ~= ""
-  end,
-  has_git = function()
-    local gitdir = vim.fs.find(".git", {
-      limit = 1,
-      upward = true,
-      type = "directory",
-      path = vim.fn.expand("%:p:h"),
-    })
-    return #gitdir > 0
-  end,
-}
-
----@class lualine_hlgrp
----@field fg string
----@field bg string
----@field gui string?
 local utils = {
   force_centering = function()
     return "%="
   end,
+  has_enough_room = function()
+    -- Small screens (<= 80): show minimal info
+    -- Medium screens (81-120): show moderate info
+    -- Large screens (>120): show all info
+    local min_width = 80
+    local preferred_width = 120
+
+    if vim.o.columns <= min_width then
+      return false
+    elseif vim.o.columns <= preferred_width then
+      -- For medium screens, check if we're in a special mode that needs more space
+      return not (vim.bo.filetype == "neo-tree" or vim.bo.filetype == "help")
+    else
+      return true
+    end
+  end,
 }
+
 local components = {
   lsp = {
     function()
       local buf_ft = vim.api.nvim_get_option_value("filetype", { scope = "local" })
       local clients = vim.lsp.get_clients()
-      local lsp_lists = {}
-      local available_servers = {}
-      if next(clients) == nil then
-        return "󱚧 " -- No server available
+
+      if #clients == 0 then
+        return "󱚧  No LSP"
       end
+
+      local active_servers = {}
       for _, client in ipairs(clients) do
-        local filetypes = client.config.filetypes
-        local client_name = client.name
-        if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-          -- Avoid adding servers that already exists.
-          if not lsp_lists[client_name] then
-            lsp_lists[client_name] = true
-            table.insert(available_servers, client_name)
-          end
+        if client.config.filetypes and vim.tbl_contains(client.config.filetypes, buf_ft) then
+          table.insert(active_servers, client.name)
         end
       end
-      return next(available_servers) == nil and "󱚧 "
-        or string.format("%s[%s]", "󱜙 ", table.concat(available_servers, ", "))
+
+      return #active_servers == 0 and "󱚧  No LSP"
+        or string.format("%s[%s]", "󱜙 ", table.concat(active_servers, ", "))
     end,
     color = { fg = "#61AFEF", gui = "bold" },
-    cond = conditionals.has_enough_room,
+    cond = utils.has_enough_room,
   },
-
   python_venv = {
     function()
       local function env_cleanup(venv)
@@ -79,13 +69,7 @@ local components = {
       return ""
     end,
     color = { fg = "#AFD700", gui = "bold" },
-    cond = conditionals.has_enough_room,
-  },
-  tabwidth = {
-    function()
-      return " " .. vim.api.nvim_get_option_value("shiftwidth", { scope = "local" })
-    end,
-    padding = 1,
+    cond = utils.has_enough_room,
   },
 }
 
@@ -125,7 +109,6 @@ return {
       "filesize",
       "progress",
     }
-
     opts.sections.lualine_z = {
       { "location", separator = { right = "" }, left_padding = 2 },
     }
