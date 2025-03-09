@@ -95,6 +95,14 @@ return {
           ["<cr>"] = "open_with_window_picker",
           ["o"] = "open_with_window_picker",
           ["l"] = "open_with_window_picker",
+          ["P"] = {
+            "toggle_preview",
+            config = {
+              use_float = true,
+              -- use_image_nvim = true,
+              title = 'Neo-tree Preview',
+            },
+          },
         },
       },
       sources = {
