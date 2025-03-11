@@ -2,12 +2,11 @@ return {
   {
     "Bekaboo/dropbar.nvim",
     lazy = true,
-    event = "BufReadPre",
-    config = function()
-      local dropbar_api = require("dropbar.api")
-      vim.keymap.set("n", "<Leader>;", dropbar_api.pick, { desc = "Pick symbols in winbar" })
-      vim.keymap.set("n", "[;", dropbar_api.goto_context_start, { desc = "Go to start of current context" })
-      vim.keymap.set("n", "];", dropbar_api.select_next_context, { desc = "Select next context" })
-    end,
+    event = { "BufReadPost", "BufNewFile" },
+    keys = {
+      { "<Leader>;", function() require("dropbar.api").pick() end, desc = "Dropbar: Pick symbols" },
+      { "[;", function() require("dropbar.api").goto_context_start() end, desc = "Dropbar: Go to context start" },
+      { "];", function() require("dropbar.api").select_next_context() end, desc = "Dropbar: Select next context" },
+    },
   },
 }
