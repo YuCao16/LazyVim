@@ -89,6 +89,8 @@ return {
           require("lazyvim.util").lsp.on_attach(function(client, _)
             if client.name == "basedpyright" then
               client.server_capabilities.semanticTokensProvider = nil
+              client.server_capabilities.hoverProvider = false
+              client.server_capabilities.signatureHelpProvider = nil
             end
           end)
         end,
