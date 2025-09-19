@@ -19,7 +19,7 @@ return {
     ---@type AvanteSupportedProvider
     claude = {
       endpoint = "https://api.anthropic.com",
-      model = "claude-3-5-sonnet-20241022",
+      -- model = "claude-3-5-sonnet-20241022",
       timeout = 30000, -- Timeout in milliseconds
       temperature = 0,
       max_tokens = 8000,
@@ -146,7 +146,7 @@ return {
     },
   },
   dependencies = {
-    "echasnovski/mini.icons", -- or nvim-tree/nvim-web-devicons
+    "nvim-mini/mini.icons", -- or nvim-tree/nvim-web-devicons
     "stevearc/dressing.nvim",
     "nvim-lua/plenary.nvim",
     "MunifTanjim/nui.nvim",
