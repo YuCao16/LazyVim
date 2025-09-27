@@ -1,12 +1,28 @@
 return {
   "akinsho/bufferline.nvim",
   -- Modify the default configuration while preserving other LazyVim settings
+  event = function()
+    -- Don't load on dashboard
+    if vim.bo.filetype == "snacks_dashboard" then
+      return {}
+    end
+    return { "BufReadPost", "BufNewFile" }
+  end,
+  init = function()
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "SnacksDashboardClosed",
+      desc = "load bufferline after dashboard closes",
+      callback = function()
+        require("lazy").load({ plugins = { "bufferline.nvim" } })
+      end,
+    })
+  end,
   keys = {
     { "<leader>bc", "<Cmd>BufferLinePick<CR>", desc = "Choose Buffer" },
     { "<leader>bC", "<Cmd>BufferLinePickClose<CR>", desc = "Choose Buffer to Close" },
   },
   opts = function(_, opts)
-    opts.options.always_show_bufferline = false
+    opts.options.always_show_bufferline = true
     -- Ensure options table exists
     opts.options = opts.options or {}
     -- Ensure offsets table exists
