@@ -75,7 +75,9 @@ return {
           },
           -- Formatters
           formatters = {
-            file = { filename_only = true },
+            file = {
+              filename_only = true,
+            },
             severity = { pos = "right" },
           },
           -- Icons similar to neo-tree

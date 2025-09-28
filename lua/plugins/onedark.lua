@@ -43,7 +43,7 @@ return {
         SnacksPickerTree = { fg = "#abb2bf" },
 
         -- Mini Icons (for folder icons in explorer)
-        MiniIconsAzure = { fg = "#8094b4" },
+        -- MiniIconsAzure = { fg = "#8094b4" },
         -- NeoTreeNormal = { bg = "#1f2329", fg = "#a0a8b7" },
         -- NeoTreeEndOfBuffer = { bg = "#1f2329" },
 
