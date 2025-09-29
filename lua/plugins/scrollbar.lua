@@ -15,6 +15,7 @@ return {
       "AvanteInput",
       "Avante",
       "AvanteSelectedFiles",
+      "vista",
     },
   },
 }
