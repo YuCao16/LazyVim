@@ -1,25 +1,16 @@
 return {
   {
     "mason-org/mason.nvim",
-
     opts = function(_, opts)
       local ensure_installed = {
-        -- python
-        "ruff",
-        "pyright",
-        "basedpyright",
-        "jedi-language-server",
+        -- DAP (Debuggers)
         "debugpy",
-        -- lua
-        "lua-language-server",
+        -- Formatters & Linters (Non-LSP)
         "stylua",
-        -- shell
-        "bash-language-server",
         "shfmt",
-        -- markdown
         "markdown-toc",
         "markdownlint-cli2",
-        "marksman",
+        "marksman", -- Note: marksman is an LSP, but keeping it here is fine if not configured in lspconfig below
       }
 
       opts.ensure_installed = opts.ensure_installed or {}
@@ -45,18 +36,9 @@ return {
         focusable = false,
       },
       servers = {
-        pyright = {
-          settings = {
-            python = {
-              analysis = {
-                -- typeCheckingMode = "strict",
-                diagnosticMode = "openFilesOnly",
-                argAssignmentFunction = false,
-              },
-              pythonPath = "python3",
-            },
-          },
-        },
+        pyright = { enabled = false },
+        basedpyright = { enabled = false },
+        jedi_language_server = { enabled = false },
         ruff = {
           init_options = {
             settings = {
@@ -64,47 +46,9 @@ return {
             },
           },
         },
-        basedpyright = {
-          settings = {
-            basedpyright = {
-              -- disableLanguageServices = true,
-              analysis = {
-                typeCheckingMode = "basic",
-              },
-            },
-          },
-        },
+        ty = {},
       },
       setup = {
-        pyright = function()
-          require("lazyvim.util").lsp.on_attach(function(client, _)
-            if client.name == "pyright" then
-              -- disable hover in favor of jedi-language-server
-              client.server_capabilities.hoverProvider = false
-              client.server_capabilities.signatureHelpProvider = nil
-            end
-          end)
-        end,
-        basedpyright = function()
-          require("lazyvim.util").lsp.on_attach(function(client, _)
-            if client.name == "basedpyright" then
-              client.server_capabilities.semanticTokensProvider = nil
-              client.server_capabilities.hoverProvider = false
-              client.server_capabilities.signatureHelpProvider = nil
-            end
-          end)
-        end,
-        jedi_language_server = function()
-          require("lazyvim.util").lsp.on_attach(function(client, _)
-            if client.name == "jedi_language_server" then
-              client.server_capabilities.codeActionProvider = false
-              client.server_capabilities.completionProvider = nil
-              client.server_capabilities.referencesProvider = false
-              client.server_capabilities.definitionProvider = false
-              client.server_capabilities.documentHighlightProvider = false
-            end
-          end)
-        end,
         sourcery = function()
           require("lazyvim.util").lsp.on_attach(function(client, _)
             if client.name == "sourcery" then
