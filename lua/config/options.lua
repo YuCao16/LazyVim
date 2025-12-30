@@ -10,7 +10,7 @@ vim.g.autoformat = false
 vim.g.snacks_animate = false
 
 -- Set to "basedpyright" to use basedpyright instead of pyright.
-vim.g.lazyvim_python_lsp = "basedpyright"
+-- vim.g.lazyvim_python_lsp = "basedpyright"
 
 -- https://github.com/neovim/neovim/discussions/28010
 vim.opt.clipboard = ""
